@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Stanley Shyiko
+ * Copyright 2016 Stanley Shyiko
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,30 @@
  */
 package com.github.shyiko.mysql.binlog.network;
 
+import com.github.shyiko.mysql.binlog.io.BufferedSocketInputStream;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.Socket;
 import java.net.SocketException;
 
 /**
  * @author <a href="mailto:stanley.shyiko@gmail.com">Stanley Shyiko</a>
  */
-public interface SocketFactory {
+public class DefaultSocketFactory implements SocketFactory {
 
-    Socket createSocket() throws SocketException;
+    @Override
+    public Socket createSocket() throws SocketException {
+        return new Socket() {
+
+            private InputStream inputStream;
+
+            @Override
+            public synchronized InputStream getInputStream() throws IOException {
+                return inputStream != null ? inputStream :
+                    (inputStream = new BufferedSocketInputStream(super.getInputStream()));
+            }
+        };
+    }
+
 }

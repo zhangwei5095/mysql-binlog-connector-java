@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Stanley Shyiko
+ * Copyright 2015 Stanley Shyiko
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,30 @@
  */
 package com.github.shyiko.mysql.binlog.network;
 
-import java.net.Socket;
-import java.net.SocketException;
+import java.io.IOException;
 
 /**
  * @author <a href="mailto:stanley.shyiko@gmail.com">Stanley Shyiko</a>
  */
-public interface SocketFactory {
+public class ServerException extends IOException {
 
-    Socket createSocket() throws SocketException;
+    private int errorCode;
+    private String sqlState;
+
+    public ServerException(String message, int errorCode, String sqlState) {
+        super(message);
+        this.errorCode = errorCode;
+        this.sqlState = sqlState;
+    }
+
+    /**
+     * @see ErrorCode
+     */
+    public int getErrorCode() {
+        return errorCode;
+    }
+
+    public String getSqlState() {
+        return sqlState;
+    }
 }

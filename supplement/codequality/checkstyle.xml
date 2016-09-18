@@ -9,10 +9,12 @@
 
     <!-- checks that file size does not exceeds limit -->
     <!-- http://checkstyle.sf.net/config_sizes.html#FileLength -->
+<!--
     <module name="FileLength">
         <property name="max" value="1000"/>
         <property name="fileExtensions" value="java"/>
     </module>
+-->
 
     <!-- checks that files are 'tab'-free -->
     <!-- http://checkstyle.sf.net/config_whitespace.html#FileTabCharacter -->
@@ -59,7 +61,8 @@
         <!-- checks for imports -->
         <!-- http://checkstyle.sf.net/config_imports.html -->
         <module name="AvoidStarImport"/>
-        <module name="IllegalImport"/> <!-- defaults to sun.* packages -->
+        <!-- defaults to sun.* packages -->
+        <!--<module name="IllegalImport"/> -->
         <module name="RedundantImport"/>
         <module name="UnusedImports"/>
 
@@ -97,6 +100,7 @@
         <!-- http://checkstyle.sf.net/config_blocks.html -->
         <module name="EmptyBlock">
             <property name="option" value="text"/>
+            <property name="tokens" value="LITERAL_DO, LITERAL_ELSE, LITERAL_FINALLY, LITERAL_IF, LITERAL_TRY, LITERAL_WHILE, INSTANCE_INIT, STATIC_INIT, LITERAL_SWITCH, LITERAL_SYNCHRONIZED"/>
         </module>
         <module name="LeftCurly"/>
         <module name="NeedBraces"/>
@@ -119,7 +123,7 @@
             <property name="protectedAllowed" value="true"/>
         </module>
         <module name="FinalClass"/>
-        <module name="InterfaceIsType"/>
+        <!--<module name="InterfaceIsType"/>-->
         <module name="HideUtilityClassConstructor"/>
         <module name="ThrowsCount">
             <property name="max" value="3"/>

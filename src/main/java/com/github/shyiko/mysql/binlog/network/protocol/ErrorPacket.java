@@ -24,18 +24,33 @@ import java.io.IOException;
  */
 public class ErrorPacket implements Packet {
 
+    public static final byte HEADER = (byte) 0xFF;
+
     private int errorCode;
+    private String sqlState;
     private String errorMessage;
 
     public ErrorPacket(byte[] bytes) throws IOException {
+        this(bytes, 0);
+    }
+
+    public ErrorPacket(byte[] bytes, int offset) throws IOException {
         ByteArrayInputStream buffer = new ByteArrayInputStream(bytes);
+        buffer.skip(offset);
         this.errorCode = buffer.readInteger(2);
-        buffer.skip(6); // 1 byte for slash and 5 for sql state
+        if (buffer.peek() == '#') {
+            buffer.skip(1); // marker of the SQL State
+            this.sqlState = buffer.readString(5);
+        }
         this.errorMessage = buffer.readString(buffer.available());
     }
 
     public int getErrorCode() {
         return errorCode;
+    }
+
+    public String getSqlState() {
+        return sqlState;
     }
 
     public String getErrorMessage() {

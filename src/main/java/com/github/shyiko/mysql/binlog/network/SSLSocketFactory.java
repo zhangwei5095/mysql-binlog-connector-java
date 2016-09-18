@@ -1,5 +1,5 @@
 /*
- * Copyright 2013 Stanley Shyiko
+ * Copyright 2016 Stanley Shyiko
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,13 +15,14 @@
  */
 package com.github.shyiko.mysql.binlog.network;
 
+import javax.net.ssl.SSLSocket;
 import java.net.Socket;
 import java.net.SocketException;
 
 /**
  * @author <a href="mailto:stanley.shyiko@gmail.com">Stanley Shyiko</a>
  */
-public interface SocketFactory {
+public interface SSLSocketFactory {
 
-    Socket createSocket() throws SocketException;
+    SSLSocket createSocket(Socket socket) throws SocketException;
 }
